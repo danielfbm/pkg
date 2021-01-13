@@ -31,24 +31,24 @@ type Level int
 type LevelStr string
 
 const (
+	T        int      = 3
 	Trace    Level    = 3
-	T        Level    = Trace
 	TraceStr LevelStr = "trace"
 
+	D        int      = 2
 	Debug    Level    = 2
-	D        Level    = Debug
 	DebugStr LevelStr = "debug"
 
+	I       int      = 1
 	Info    Level    = 1
-	I       Level    = Info
 	InfoStr LevelStr = "info"
 
-	Warning    Level    = 0
-	W          Level    = Warning
+	W          int      = 0
+	Warning    Level    = Level(W)
 	WarningStr LevelStr = "warning"
 
+	E        int      = -1
 	Error    Level    = -1
-	E        Level    = Error
 	ErrorStr LevelStr = "error"
 )
 
@@ -86,6 +86,11 @@ func (s Level) LevelStr() LevelStr {
 	default:
 		return ErrorStr
 	}
+}
+
+// Int return value as int
+func (s Level) Int() int {
+	return int(s)
 }
 
 // String return itself as string
