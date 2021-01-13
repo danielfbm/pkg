@@ -9,5 +9,5 @@ type Client = clients.Client
 
 // Injector allows injection of logger
 type Injector interface {
-	WithLogger(client Client)
+	WithClient(client Client)
 }
