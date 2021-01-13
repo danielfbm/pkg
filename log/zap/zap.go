@@ -28,7 +28,7 @@ func NewZapLogger(opts *log.SimplifiedOptions, options ...zap.Option) log.Logger
 	} else {
 		config = zap.NewProductionConfig()
 	}
-	config.Level = LogLevel(opts.LogLevel)
+	config.Level = zap.NewAtomicLevelAt(LogLevel(opts.LogLevel))
 
 	config.Encoding = opts.Format.String()
 	if !opts.DisableColor {
@@ -37,7 +37,8 @@ func NewZapLogger(opts *log.SimplifiedOptions, options ...zap.Option) log.Logger
 		config.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
 	}
 	options = append(options, zap.WithCaller(opts.EnableCaller))
-	return FromZapLogger(zap.New(config, options...))
+	logger, _ := config.Build(options...)
+	return FromZapLogger(logger)
 }
 
 // LogLevel converts string text into log level
